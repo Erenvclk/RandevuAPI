@@ -8,6 +8,7 @@ public class RandevuApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RandevuApplication.class, args);
+
 	}
 
 }
