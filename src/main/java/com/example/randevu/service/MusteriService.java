@@ -23,18 +23,22 @@ public class MusteriService {
 
     public List<Musteri> adListele(String ad) {
 
-        List<Musteri> musteriler = musteriRepository.findByAd(ad);
+        List<Musteri> musteriAdlari = musteriRepository.findByAd(ad);
 
-        if (musteriler.isEmpty()) {
+        if (musteriAdlari.isEmpty()) {
             throw new RuntimeException("bu isimde musteri yok");
 
         }
-        return musteriler;
+        return musteriAdlari;
     }
 
     public Musteri getir(Long id) {
         return musteriRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Müşteri bulunamadı"));
 
+    }
+
+    public List <Musteri> musteriler (Musteri musteri){
+        return musteriRepository.findAll();
     }
 }
