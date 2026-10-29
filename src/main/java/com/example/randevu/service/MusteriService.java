@@ -38,7 +38,7 @@ public class MusteriService {
 
     }
 
-    public List <Musteri> musteriler (Musteri musteri){
+    public List<Musteri> listele() {
         return musteriRepository.findAll();
     }
 }
