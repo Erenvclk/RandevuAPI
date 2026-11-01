@@ -2,6 +2,8 @@ package com.example.randevu.controller;
 
 import com.example.randevu.service.MusteriService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +36,7 @@ public class MusteriController {
     // return musteriService.kaydet(musteri);
     // }
     @PostMapping
-    public MusteriResponse kaydet(@RequestBody MusteriRequest request) {
+    public MusteriResponse kaydet(@Valid  @RequestBody MusteriRequest request) {
         Musteri musteri = musteriMapper.toEntity(request);
         Musteri kayitli = musteriService.kaydet(musteri);
         return musteriMapper.toResponse(kayitli);

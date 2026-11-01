@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import com.example.randevu.service.HizmetService;
 
+import jakarta.validation.Valid;
+
 import com.example.randevu.dto.HizmetRequest;
 import com.example.randevu.dto.HizmetResponse;
 
@@ -34,7 +36,7 @@ public class HizmetController {
     // return hizmetService.kaydet(hizmet);
     // }
     @PostMapping
-    public HizmetResponse kaydet(@RequestBody HizmetRequest request) {
+    public HizmetResponse kaydet(@Valid  @RequestBody HizmetRequest request) {
         Hizmet hizmet = hizmetMapper.toEntity(request);
         Hizmet kayitli = hizmetService.kaydet(hizmet);
         return hizmetMapper.toResponse(kayitli);

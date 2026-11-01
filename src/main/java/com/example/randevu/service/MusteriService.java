@@ -3,6 +3,8 @@ package com.example.randevu.service;
 import org.springframework.stereotype.Service;
 
 import com.example.randevu.entity.Musteri;
+import com.example.randevu.exception.CakismaException;
+import com.example.randevu.exception.KayitBulunamadiException;
 import com.example.randevu.repository.MusteriRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ public class MusteriService {
     public Musteri kaydet(Musteri musteri) {
 
         if (musteriRepository.existsByEmail(musteri.getEmail())) {
-            throw new RuntimeException("bu e-posta zaten kayıtlı");
+            throw new CakismaException("bu eposta zaten kayıtlı");
 
         }
         return musteriRepository.save(musteri);
@@ -34,7 +36,7 @@ public class MusteriService {
 
     public Musteri getir(Long id) {
         return musteriRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Müşteri bulunamadı"));
+                .orElseThrow(() -> new KayitBulunamadiException("Musteri bulunamadı"));
 
     }
 

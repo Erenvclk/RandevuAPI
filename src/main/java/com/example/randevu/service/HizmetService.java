@@ -1,8 +1,10 @@
 package com.example.randevu.service;
 
+
 import org.springframework.stereotype.Service;
 
 import com.example.randevu.entity.Hizmet;
+import com.example.randevu.exception.KayitBulunamadiException;
 import com.example.randevu.repository.HizmetRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ public class HizmetService {
 
     public Hizmet getir(Long id) {
         return hizmetRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("hizmet bulunamadı"));
+                .orElseThrow(() -> new KayitBulunamadiException("hizmet bulunamadı"));
     }
 
     public List<Hizmet> listele() {
