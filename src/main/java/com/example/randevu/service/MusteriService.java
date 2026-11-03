@@ -43,4 +43,22 @@ public class MusteriService {
     public List<Musteri> listele() {
         return musteriRepository.findAll();
     }
+
+    public void sil(Long id) {
+        Musteri musteri = getir(id);
+        musteriRepository.delete(musteri);
+    }
+
+    public Musteri guncelle(Long id, Musteri musteri) {
+        Musteri mevcutMusteri = getir(id);
+        if (!mevcutMusteri.getEmail().equals(musteri.getEmail())
+                && musteriRepository.existsByEmail(musteri.getEmail())) {
+            throw new CakismaException("Bu e-posta zaten kayıtlı");
+        }
+        mevcutMusteri.setAd(musteri.getAd());
+        mevcutMusteri.setSoyad(musteri.getSoyad());
+        mevcutMusteri.setTelefon(musteri.getTelefon());
+        mevcutMusteri.setEmail(musteri.getEmail());
+        return musteriRepository.save(mevcutMusteri);
+    }
 }

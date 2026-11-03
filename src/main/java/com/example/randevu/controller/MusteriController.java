@@ -11,10 +11,14 @@ import com.example.randevu.dto.MusteriRequest;
 import com.example.randevu.dto.MusteriResponse;
 import com.example.randevu.entity.Musteri;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class MusteriController {
     // return musteriService.kaydet(musteri);
     // }
     @PostMapping
-    public MusteriResponse kaydet(@Valid  @RequestBody MusteriRequest request) {
+    public MusteriResponse kaydet(@Valid @RequestBody MusteriRequest request) {
         Musteri musteri = musteriMapper.toEntity(request);
         Musteri kayitli = musteriService.kaydet(musteri);
         return musteriMapper.toResponse(kayitli);
@@ -70,5 +74,19 @@ public class MusteriController {
 
         }
         return cevap;
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void sil(@PathVariable Long id) {
+        musteriService.sil(id);
+    }
+
+    @PutMapping("/{id}")
+    public MusteriResponse guncelle(@PathVariable Long id,
+            @Valid @RequestBody MusteriRequest request) {
+        Musteri musteri = musteriMapper.toEntity(request);
+        Musteri guncel = musteriService.guncelle(id, musteri);
+        return musteriMapper.toResponse(guncel);
     }
 }
