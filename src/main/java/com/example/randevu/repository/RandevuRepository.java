@@ -11,4 +11,10 @@ public interface RandevuRepository extends JpaRepository<Randevu, Long> {
             LocalDateTime yeniBitis,
             LocalDateTime yeniBaslangic,
             RandevuDurumu durum);
+
+    boolean existsByIdNotAndBaslangicLessThanAndBitisGreaterThanAndDurumNot(
+            Long id,
+            LocalDateTime yeniBitis,
+            LocalDateTime yeniBaslangic,
+            RandevuDurumu durum);
 }
