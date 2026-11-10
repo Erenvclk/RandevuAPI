@@ -11,6 +11,9 @@ import com.example.randevu.entity.Randevu;
 import com.example.randevu.enums.RandevuDurumu;
 import com.example.randevu.exception.CakismaException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.randevu.repository.RandevuRepository;
 import com.example.randevu.exception.KayitBulunamadiException;
 import lombok.RequiredArgsConstructor;
@@ -55,25 +58,30 @@ public class RandevuService {
         randevuRepository.delete(randevu);
     }
 
-    // public Randevu güncelle(long id, Long musteriId, Long hizmetId, LocalDateTime baslangic) {
-    //     Randevu mevcutRandevu = getir(id);
-    //     if (randevuRepository.existsByBaslangicLessThanAndBitisGreaterThanAndDurumNot(baslangic, baslangic,
-    //             RandevuDurumu.IPTAL)) {
-    //         throw new CakismaException("Bu randevu iptal edilmiş");
-    //     }
-    //     Musteri müşteri = musteriService.getir(musteriId);
-    //     Hizmet hizmet = hizmetService.getir(hizmetId);
-    //     LocalDateTime bitis = baslangic.plusMinutes(hizmet.getSureDk());
+    // public Randevu güncelle(long id, Long musteriId, Long hizmetId, LocalDateTime
+    // baslangic) {
+    // Randevu mevcutRandevu = getir(id);
+    // if
+    // (randevuRepository.existsByBaslangicLessThanAndBitisGreaterThanAndDurumNot(baslangic,
+    // baslangic,
+    // RandevuDurumu.IPTAL)) {
+    // throw new CakismaException("Bu randevu iptal edilmiş");
+    // }
+    // Musteri müşteri = musteriService.getir(musteriId);
+    // Hizmet hizmet = hizmetService.getir(hizmetId);
+    // LocalDateTime bitis = baslangic.plusMinutes(hizmet.getSureDk());
 
-    //     if (randevuRepository.existsByIdNotAndBaslangicLessThanAndBitisGreaterThanAndDurumNot(hizmetId, bitis,
-    //             baslangic, RandevuDurumu.IPTAL)) {
-    //         mevcutRandevu.setMusteri(müşteri);
-    //         mevcutRandevu.setHizmet(hizmet);
-    //         mevcutRandevu.setBaslangic(baslangic);
-    //         mevcutRandevu.setBitis(bitis);
-    //         return randevuRepository.save(mevcutRandevu);
-    //     }
-    //     return mevcutRandevu;
+    // if
+    // (randevuRepository.existsByIdNotAndBaslangicLessThanAndBitisGreaterThanAndDurumNot(hizmetId,
+    // bitis,
+    // baslangic, RandevuDurumu.IPTAL)) {
+    // mevcutRandevu.setMusteri(müşteri);
+    // mevcutRandevu.setHizmet(hizmet);
+    // mevcutRandevu.setBaslangic(baslangic);
+    // mevcutRandevu.setBitis(bitis);
+    // return randevuRepository.save(mevcutRandevu);
+    // }
+    // return mevcutRandevu;
     // }
 
     public Randevu guncelle(Long id, Long musteriId, Long hizmetId, LocalDateTime baslangic) {
@@ -107,5 +115,13 @@ public class RandevuService {
         }
         randevu.setDurum(RandevuDurumu.IPTAL);
         return randevuRepository.save(randevu);
+    }
+
+    public Page<Randevu> listele(Pageable pageable) {
+        return randevuRepository.findAll(pageable);
+    }
+
+    public Page<Randevu> musteriyeGoreListele(Long musteriId, Pageable pageable) {
+        return randevuRepository.findByMusteriId(musteriId, pageable);
     }
 }

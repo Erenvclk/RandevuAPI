@@ -7,17 +7,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.randevu.dto.RandevuRequest;
 import com.example.randevu.dto.RandevuResponse;
+
 import com.example.randevu.entity.Randevu;
 import com.example.randevu.mapper.RandevuMapper;
+
 import com.example.randevu.service.RandevuService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import java.util.List;
 
 @RestController
 @RequestMapping("/randevular")
@@ -42,12 +47,25 @@ public class RandevuController {
         return randevuMapper.toResponse(randevu);
     }
 
+    // @GetMapping
+    // public List<RandevuResponse> listele() {
+    // List<Randevu> randevular = randevuService.listele();
+    // return randevular.stream()
+    // .map(randevuMapper::toResponse)
+    // .toList();
+    // }
     @GetMapping
-    public List<RandevuResponse> listele() {
-        List<Randevu> randevular = randevuService.listele();
-        return randevular.stream()
-                .map(randevuMapper::toResponse)
-                .toList();
+    public Page<RandevuResponse> listele(
+            @RequestParam(required = false) Long musteriId,
+            Pageable pageable) {
+        Page<Randevu> sayfa;
+        if (musteriId != null) {
+            sayfa = randevuService.musteriyeGoreListele(musteriId, pageable);
+        } else {
+            sayfa = randevuService.listele(pageable);
+        }
+
+        return sayfa.map(randevuMapper::toResponse);
     }
 
     @PatchMapping("/{id}/iptal")
@@ -56,7 +74,7 @@ public class RandevuController {
         return randevuMapper.toResponse(randevu);
     }
 
-    @PutMapping ("/{id}")
+    @PutMapping("/{id}")
     public RandevuResponse guncelle(@PathVariable Long id, @Valid @RequestBody RandevuRequest request) {
         Randevu randevu = randevuService.guncelle(
                 id,

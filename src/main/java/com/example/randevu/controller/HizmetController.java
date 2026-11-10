@@ -20,7 +20,7 @@ import com.example.randevu.mapper.HizmetMapper;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,12 +64,9 @@ public class HizmetController {
     @GetMapping
     public List<HizmetResponse> listele() {
         List<Hizmet> hizmetler = hizmetService.listele();
-        List<HizmetResponse> cevap = new ArrayList<>();
-
-        for (Hizmet h : hizmetler) {
-            cevap.add(hizmetMapper.toResponse(h));
-
-        }
+        List<HizmetResponse> cevap = hizmetler.stream()
+                .map(hizmetMapper::toResponse)
+                .toList();
         return cevap;
     }
 
