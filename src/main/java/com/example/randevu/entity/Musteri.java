@@ -1,36 +1,44 @@
-package com.example.randevu.entity ;
+package com.example.randevu.entity;
+
+import com.example.randevu.enums.Rol;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter; 
+import lombok.Setter;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
 
-@Entity 
-@Getter 
-@Setter 
-@NoArgsConstructor 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class Musteri {
-   
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String ad;
-    
+
     @Column(nullable = false)
     private String soyad;
-   
+
     @Column(nullable = false)
     private String telefon;
-    
+
     @Column(nullable = false, unique = true)
     private String email;
-    
-    
+
+    private String sifre;
+
+    @Enumerated(EnumType.STRING)
+    Rol rol;
+
 }

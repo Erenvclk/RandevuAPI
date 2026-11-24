@@ -7,4 +7,6 @@ import java.util.List;
 public interface HizmetRepository extends JpaRepository<Hizmet, Long> {
 
     List<Hizmet> findByAd(String ad);
+
+    
 }

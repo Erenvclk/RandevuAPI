@@ -12,4 +12,5 @@ public interface MusteriRepository extends JpaRepository<Musteri, Long> {
     boolean existsByEmail(String email);
 
     List<Musteri> findByAd(String ad);
+
 }

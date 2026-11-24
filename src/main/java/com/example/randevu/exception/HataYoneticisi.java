@@ -39,4 +39,12 @@ public class HataYoneticisi {
         String mesaj = e.getMessage();
         return new HataResponse(409, mesaj);
     }
+
+    @ExceptionHandler(GirisHatasiException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED) 
+    public HataResponse GirisHatasi(GirisHatasiException e){
+        String mesaj = e.getMessage();
+        return  new HataResponse(401 , mesaj);
+    }
+
 }
